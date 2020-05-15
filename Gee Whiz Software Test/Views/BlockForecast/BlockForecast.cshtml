@@ -1,0 +1,101 @@
+﻿@model Gee_Whiz_Software_Test.ViewModels.BlockForecastViewModel
+
+@{
+    ViewBag.Title = "Block Forecast";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Block Forecast</h2>
+<div class="row">
+    <div class="col-sm-12" style="padding-top: 6px">
+        <p>This is the block forecast page.  Here, users can modify the forecast for a block for the current year.  To save changes, click the "Save" button.  To delete this forecast, click the "Delete" button.</p>
+    </div>
+</div>
+@using (Html.BeginForm("BlockForecast", "BlockForecast", FormMethod.Post))
+{
+    <div class="row" id="validationDiv">
+        <div class="col-sm-12" style="padding-top: 6px">
+            @Html.ValidationSummary()
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Block Id:
+        </div>
+        <div class="col-sm-2">
+            @Model.blockId
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Crop Year:
+        </div>
+        <div class="col-sm-2">
+            @Model.cropYear
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            Forecast Value:
+        </div>
+        <div class="col-sm-2">
+            @Html.TextBoxFor(x => x.forcastValue)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <button id="delete">Delete</button>
+        </div>
+        <div class="col-sm-2">
+            <button id="save">Save</button>
+        </div>
+    </div>
+
+    @Html.HiddenFor(x => x.blockId)
+    @Html.HiddenFor(x => x.cropYear)
+    @Html.HiddenFor(x => x.submitType)
+}
+
+<div class="row">
+    <div class="col-sm-12"><br/></div>
+</div>
+
+<div id="previousForecastDiv">
+
+</div>
+
+<div id="previousActualDiv">
+
+</div>
+<script type="text/javascript">
+    //Variable for the url we'll use.
+    var prevForecastUrl = '@Url.Action("_PreviousBlockForecasts", "BlockForecast")';
+    var prevActualUrl = '@Url.Action("_PreviousBlockActuals","BlockForecast")';
+
+    //Set up the onclick for the button.
+        $(function () {
+            $("body").on('click', "#delete", deleteForecast);
+            $("body").on('click', "#save", saveForecast);
+            $("document").ready(loadPartialViews);
+        });
+
+        function deleteForecast() {
+            $('#submitType').val(0);
+            document.getElementById("forecastForm").submit();
+        }
+
+        function saveForecast() {
+            $('#submitType').val(1);
+            document.getElementById("forecastForm").submit();
+    }
+
+    function loadPartialViews() {
+        //Get the block Id.
+        var blockId = $('#blockId').val();
+
+        //So, what we have here are two divs that are being populated by two different partial views.
+        $('#previousForecastDiv').load(prevForecastUrl, { blockId: blockId });
+        $('#previousActualDiv').load(prevActualUrl, { blockId: blockId });
+    }
+
+</script>

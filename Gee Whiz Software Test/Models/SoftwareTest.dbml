@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SoftwareTest" Class="SoftwareTestDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-QK8VG7U;Initial Catalog=SoftwareTest;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="SoftwareTestConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.vw_Variety" Member="vw_Varieties">
+    <Type Name="vw_Variety">
+      <Column Name="VarietyID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VarietyName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vw_Region" Member="vw_Regions">
+    <Type Name="vw_Region">
+      <Column Name="RegionId" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RegionName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Function Name="dbo.fn_BlockSearch" Method="fn_BlockSearch" IsComposable="true">
+    <Parameter Name="regionId" Type="System.Int32" DbType="Int" />
+    <Parameter Name="varietyId" Type="System.Int32" DbType="Int" />
+    <ElementType Name="fn_BlockSearchResult">
+      <Column Name="BlockID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="RegionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Region" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Ranch" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Acres" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Column Name="VarietyID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="VarietyName" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Latitude" Type="System.Decimal" DbType="Decimal(10,6) NOT NULL" CanBeNull="false" />
+      <Column Name="Longitude" Type="System.Decimal" DbType="Decimal(10,6) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.sp_ModifyHarvestForecast" Method="sp_ModifyHarvestForecast">
+    <Parameter Name="BlockId" Parameter="blockId" Type="System.String" DbType="NVarChar(25)" />
+    <Parameter Name="CropYear" Parameter="cropYear" Type="System.Int32" DbType="Int" />
+    <Parameter Name="ForcastValue" Parameter="forcastValue" Type="System.Int32" DbType="Int" />
+    <Parameter Name="RetVal" Parameter="retVal" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_DeleteHarvestForecast" Method="sp_DeleteHarvestForecast">
+    <Parameter Name="BlockId" Parameter="blockId" Type="System.String" DbType="NVarChar(25)" />
+    <Parameter Name="RetVal" Parameter="retVal" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.fn_GetHarvestForecast" Method="fn_GetHarvestForecast" IsComposable="true">
+    <Parameter Name="BlockId" Parameter="blockId" Type="System.String" DbType="NVarChar(25)" />
+    <ElementType Name="fn_GetHarvestForecastResult">
+      <Column Name="CropYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BlockID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ForcastValue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_GetPreviousHarvestForecast" Method="fn_GetPreviousHarvestForecast" IsComposable="true">
+    <Parameter Name="BlockId" Parameter="blockId" Type="System.String" DbType="NVarChar(25)" />
+    <ElementType Name="fn_GetPreviousHarvestForecastResult">
+      <Column Name="CropYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BlockID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="ForcastValue" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.fn_GetPreviousHarvestActuals" Method="fn_GetPreviousHarvestActuals" IsComposable="true">
+    <Parameter Name="BlockId" Parameter="blockId" Type="System.String" DbType="NVarChar(25)" />
+    <ElementType Name="fn_GetPreviousHarvestActualsResult">
+      <Column Name="CropYear" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="BlockID" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="HarvestDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Bins" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>

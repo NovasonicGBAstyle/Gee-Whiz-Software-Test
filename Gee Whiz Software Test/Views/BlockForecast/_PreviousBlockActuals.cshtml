@@ -1,0 +1,38 @@
+﻿@model Gee_Whiz_Software_Test.ViewModels.PreviousBlockActualViewModel
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Previous Block Actual Bins</h2>
+        </div>
+    </div>
+@*Check to see if there are any results.*@
+@if (Model.previousBlockActuals.Count == 0)
+{
+    //No results, so we'll just say that there are no results.
+    <div class="row">
+        <div class="col-sm-12">
+            <p>No previous actual results returned.</p>
+        </div>
+    </div>
+}
+else
+{
+    //We have results, so we'll manually build a "table".  This is the header row.
+    <div class="row">
+        <div class="col-sm-2">Block ID</div>
+        <div class="col-sm-2">Crop Year</div>
+        <div class="col-sm-2">Harvest Date</div>
+        <div class="col-sm-2">Bins</div>
+    </div>
+
+    //Next, we'll run through the block search results, and add a new "row" for every record.
+    foreach (var rec in Model.previousBlockActuals)
+    {
+        <div class="row">
+            <div class="col-sm-2">@rec.blockId</div>
+            <div class="col-sm-2">@rec.cropYear</div>
+            <div class="col-sm-2">@rec.harvestDate.ToString("MM/dd/yyyy")</div>
+            <div class="col-sm-2">@rec.bins</div>
+        </div>
+    }
+}
+

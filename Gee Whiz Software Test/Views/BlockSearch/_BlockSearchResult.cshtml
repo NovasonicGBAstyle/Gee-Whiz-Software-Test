@@ -1,0 +1,35 @@
+﻿@model Gee_Whiz_Software_Test.ViewModels.BlockSearchResultViewModel
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Search Results</h2>
+    </div>
+</div>
+@*Check to see if there are any results.*@
+@if (Model.blockSearchResults.Count == 0)
+        {
+    //No results, so we'll just say that there are no results.
+    <div class="row">
+        <div class="col-sm-12">
+            <p>No results returned.</p>
+        </div>
+    </div>
+}
+else
+{
+    //We have results, so we'll manually build a "table".  This is the header row.
+    <div class="row">
+        <div class="col-sm-2">Block Id</div>
+        <div class="col-sm-2">Region</div>
+        <div class="col-sm-2">Variety Name</div>
+    </div>
+
+    //Next, we'll run through the block search results, and add a new "row" for every record.
+    foreach(var rec in Model.blockSearchResults)
+    {
+        <div class="row">
+            <div class="col-sm-2"><a href="@Url.Action("BlockForecast", "BlockForecast", new { blockId = rec.blockId })">@rec.blockId</a></div>
+            <div class="col-sm-2">@rec.region</div>
+            <div class="col-sm-2">@rec.varietyName</div>
+        </div>
+    }
+}

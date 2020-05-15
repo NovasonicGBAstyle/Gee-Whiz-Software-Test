@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Forecast Update Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Forecast Update Success</h2>
+
+<div class="row">
+    <div class="col-sm-12">
+        <p>You have updated the forecast.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <button id="backToSearch">Return To Search</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //Variable for the url we'll use.
+    var url = '@Url.Action("BlockSearch", "BlockSearch")';
+
+    //Set up the onclick for the button.
+        $(function () {
+            $("body").on('click', "#backToSearch", backToSearch);
+        });
+
+    function backToSearch() {
+        window.location = url;
+    }
+</script>

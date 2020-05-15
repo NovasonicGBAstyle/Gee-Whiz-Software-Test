@@ -1,0 +1,61 @@
+﻿@model Gee_Whiz_Software_Test.ViewModels.BlockSearchViewModel
+@{
+    ViewBag.Title = "Block Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Block Search</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <p></p>This is the block search page.  Select a variety and a region to see the blocks matching that variety and region.  If any blocks match the search, they will show up in a grid below the search area.  Clicking on the block Id will direct the page to the block forecast.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        Variety:
+    </div>
+    <div class="col-sm-1">
+        @Html.DropDownListFor(m => m.searchVarietyId, Model.varieties)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-1">
+        Region:
+    </div>
+    <div class="col-sm-1">
+        @Html.DropDownListFor(m => m.searchRegionId, Model.regions)
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <button id="search">Search</button>
+    </div>
+</div>
+
+<div id="resultsDiv">
+</div>
+
+<script type="text/javascript">
+    //Variable for the url we'll use.
+    var url = '@Url.Action("_BlockSearchResult", "BlockSearch")';
+
+    //Set up the onclick for the button.
+    $(function () {
+        $("body").on('click', "#search", loadSearchResults);
+
+    });
+
+    //This function will run when the button is clicked.
+    function loadSearchResults() {
+        //Get form values.
+        var searchVarietyId = $('#searchVarietyId').val();
+        var searchRegionId = $('#searchRegionId').val();
+
+        //This will load the action result from our url into the resultsDiv.
+        $('#resultsDiv').load(url, { varietyId: searchVarietyId, regionId: searchRegionId });
+    }
+
+</script>
